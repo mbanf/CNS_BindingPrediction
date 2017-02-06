@@ -13,3 +13,50 @@ As a result, we obtained a regulatory blueprint of 390 regulators and 17610 targ
 
 
 ird, we added an expression atlas of A. thaliana development57 comprising RNA samples from 83 tissues and developmental stages.  e expression data was used to derive a condition speci c co-expression network.  e expression dataset had already been normalized using Robust Multichip Averaging (RMA)57. Subsequently, we averaged tissue and developmental stage speci c exper- imental replicates. Finally, a variance based  ltering (using the gene lter R package) was applied to remove genes that exhibited little variation across all tissues and developmental stages.
+
+
+General usage 
+Step 1) Initial gene regulatory network inference (Figure 1 A) is based on fast random forest regression followed by DNA binding prediction map filtering (GRACE_initial_GRN_inference.R) 
+
+Specific parameters and datasets 
+th.grnCutoff <- 0.999 // initial cutoff for random forest regression on gene expression network (should result in not more than 20000 - 30000 links) 
+n.cpus <- 2 // number of available cpus for parallel random forest regression 
+m.expression <- ... // load expression matrix for grn inference - matrix - rows (genes) x cols (conditions) 
+v.tfs <- ... // character vector of transcription factor genes 
+df.dna_binding <- // load DNA binding set (dataframe with 2 columns) 
+
+Step 2) Configure GRACE_load_datasets.R to set paths to the location of all needed datasets.
+
+
+Step 3) Configure GRACE_pipeline_template.R, as described within the script, to run GRACE on the initial network using cofunctional network information and regulatory as well as cofunctional evidence data as training sets (Figure 1 B-C)
+
+Specific parameters and datasets 
+n.cpus <- 2 
+beta <- 1 # equal emphasis on precision (atrm) and recall (bp coreg pairs) - introducing (novel) combined f-measure (physical + functional evidence, singularity handling, minimum size) 
+b.normalize_precision <- TRUE 
+b.jaccard = TRUE 
+n.sets <- 20 
+lambda.gridSearch <- c(0.01,seq(0.5,2.5,0.5)) 
+th.percentage.hyperparameters = 0.99 # grid search 
+max.call = 200 # simulated annealing 
+n.models <- 100 # 100 models 
+n.sample_size <- 0.632 # as in traditional bootrapping approaches 
+
+Tutorials
+In addition, we have prepared two standalone tutorials (for A. thaliana and D. melanogaster) in order to reproduce results 
+GRACE_tutorial_athaliana.R - represents a less optimized version of GRACE - can be used to recompute the prioritized predictions (unpack A. thaliana dataset in GRACE folder) 
+GRACE_tutorial_dmelanogaster.R - based on the current version of GRACE - recompute the prioritized predictions (unpack D. melanogaster dataset in GRACE folder) 
+
+By default, the precomputed GRACE models are loaded for further processing, otherwise they can be recomputed. 
+
+References
+Datasets used within the D. melanogaster model
+Marbach D, Roy S, Ay F, Meyer PE, Candeias R, Kahveci T, Bristow CA, Kellis M. Predictive regulatory models in Drosophila melanogaster by integrative inference of transcriptional networks. Genome Res. 2012 Jul;22(7):1334-49. 
+
+GRACE algorithm and results
+Banf M, and Rhee S. Enhancing gene regulatory network inference through data integration with markov random fields. accepted in Nature Scientific Reports.
+
+
+For help or questions please contact: 
+mbanf.research(at)gmail.com
+
