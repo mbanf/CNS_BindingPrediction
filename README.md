@@ -4,6 +4,9 @@
 
 To reduce computation time, we match binding motifs to identify binding within CNS regions first. Subsequently, we identify promoter regions that contain the CNS, therefore most likely bound by the transcription factors. Matching uses Implements effective parallelization in order to parallelize, as independent events, based on the foreach package in R. 
 
+![Alt text](/CNS_DNA_binding.png?raw=true "CNS_DNA_binding")
+
+
 tool by vandepoele to identify Conserved noncoding regions for multiple species
 
 
