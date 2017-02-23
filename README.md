@@ -4,7 +4,8 @@ Accurate discovery of cis-regulatory elements remains a challenging, suffering f
 
 A general framework to identify conserved non-coding sequences in multiple species is BLSSpeller, an algorithm that supports both alignment-free and alignment-based motif discovery in the promoter sequences of related species. Putative motifs are exhaustively enumerated as words over the IUPAC alphabet and screened for conservation using the branch length score. Additionally, a confidence score is established in a genome-wide fashion. (https://academic.oup.com/bioinformatics/article/31/23/3758/209257/BLSSpeller-exhaustive-comparative-discovery-of)
 
-# Matching DNA binding motifs to CNS followed by matching CNS to promoters to identify genes
+<br/>
+* Matching DNA binding motifs to CNS followed by matching CNS to promoters to identify genes * <br/>
 
 ![Alt text](/CNS_DNA_binding.png?raw=true "CNS_DNA_binding")
 
